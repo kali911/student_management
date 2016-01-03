@@ -1,0 +1,77 @@
+.woi-alert{
+	margin-top: 5px;
+	padding: 10px 25px 10px 10px;
+}
+
+#register{
+	width: 50%;
+	margin: auto;
+}
+
+.woi-btn{
+	width: 100%;
+	color: white;
+  	border-color: #6bd95b;
+  	background-color: #6bd95b;
+  	height: 40px;
+  	margin-top: 10px;
+  	font-size: 20px
+}
+
+#login{
+	width: 50%;
+	margin: auto;
+}
+
+.woi-btn-icons{
+	height: 40px;
+	line-height: 40px;
+	font-size: 0.8em;
+}
+
+
+#nav-username{
+	font-weight: bold;
+	font-size: 1.3rem;
+}
+
+#content-body{
+	margin-bottom: 20px;
+}
+
+.test > img {
+	width: 100%;
+}
+
+.woi-modal-content{
+	padding: 24px;
+}
+
+/* error modal*/
+#modal1{
+	bottom: inherit;
+}
+/* editor */
+#modal2{
+	bottom: inherit;
+}
+
+
+#describe{
+	height: 6rem;
+}
+
+.woi-help-text{
+	color: #9e9e9e;
+	font-weight: bold;
+	font-size: 1rem;
+}
+/* post editor summernote*/
+.note-editable img {
+	display: block;
+	width: 100%;
+}
+
+#woi-public{
+	width: 100%;
+}

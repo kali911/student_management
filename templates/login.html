@@ -1,0 +1,35 @@
+{% extends 'common/layout.html' %}
+
+{%block main%}
+<div class="card-panel hoverable">
+    <form id="login" action="" method="post">
+    {% csrf_token %}
+        <div class="input-field has-feedback {% if error %}has-error{% else %}has-success{% endif %}">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="username" type="text" name="username" value="{{ form.cleaned_data.username }}">
+            <label for="username">用户名</label>
+
+        </div>
+
+
+
+        <div class="has-feedback {% if error %}has-error{% else %}has-success{% endif %} input-field" >
+            <i class="material-icons prefix">lock</i>
+            <input type="password"  id="password" name="password" value="{{ form.cleaned_data.password }}">
+            <label for="password">密码</label>
+
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible woi-alert" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+                {{ error}}
+            </div>
+            {% endif %}
+        </div>
+
+
+        <button type="submit" class="btn waves-effect waves-light woi-btn">登录
+        <i class="material-icons">send</i>
+        </button>
+    </form>
+</div>
+{%endblock%}

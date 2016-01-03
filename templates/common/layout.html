@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <!-- <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <title>{% block title %}我爱大学{% endblock %}</title>
+    <!-- md -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="/static/css/material-icons.css">
+    <link rel="shortcut icon" href="/media/favicon.ico">
+    <link rel="icon" type="image/gif" href="/media/animated_favicon1.gif">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    {% block stylesheet %}{% endblock %}
+    {% block javascript %}{% endblock %}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $('.J_search').submit(function(e) {
+                var _node = $(this);
+                var query = _node.find('input').val();
+                e.preventDefault();
+                window.open('http://www.google.com/search?q=site:f2e.im/t%20' + query, "_blank");
+            });
+        });
+    </script>
+    {% comment %}
+    <script type="text/javascript" src="/static/js/widget/jquery.scrolltotop-min.js"></script>
+    {% endcomment %}
+    <style type="text/css">
+        .totop a {
+            display: block;
+            width: 40px;
+            height: 35px;
+            background: url('/static/images/totop.gif') no-repeat;
+            text-indent: -9999px;
+            text-decoration: none;
+        }
+
+        .totop a:hover {
+            background-position: 0 -35px;
+        }
+    </style>
+    {% comment %}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $.scrolltotop({
+                className: 'totop',
+                controlHTML: '<a href="javascript:;">回到顶部↑</a>',
+                offsety: 10
+            });
+        });
+    </script>
+    {% endcomment %}
+
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">WoiSchool</a>
+        <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            {% if user.is_authenticated %}
+            <li>
+                <a href="/u/{{ user.username }}/" class="avatar">
+                    <img src="/media/account/avatar/hanhan.jpg" class="circle responsive-img" width="40" height="40">
+                </a>
+            </li>
+            <li><a href="/u/{{ user.username }}/">{{ user.username }}</a></li>
+            <li>
+                <a href="/account/setting/">
+                    <i class="material-icons">settings</i>
+                </a>
+            </li>
+            <li>
+                <a href="/account/logout/">
+                    <i class="material-icons left" id="test">exit_to_app</i>
+                </a>
+            </li>
+            {% else %}
+            
+            <li><a href="/account/public_login/" class="btn orange light-2 waves-effect waves-light">登入</a></li>
+            <li><a href="/account/public_register/" >注册</a></li>
+            {% endif %} 
+        </ul>
+
+        <ul class="side-nav" id="mobile-menu">
+            {% if user.is_authenticate %}
+            <li>
+                <a href="/u/{{ user.username }}/" class="avatar">
+                    <img src="/static/avatar/s_{% if user.avatar %}{{ user.avatar }}{% else %}default.png{% endif %}" width="20" height="20">
+                </a>
+            </li>
+            <li><a href="/u/{{ user.username }}/">{{ user.username }}</a></li>
+            <li>
+                <a href="/account/setting/">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                </a>
+            </li>
+            <li>
+                <a href="/account/logout/" class="btn btn-small">logout</a>
+            </li>
+            {% else %}
+            
+            <li><a href="/account/public_login/" >登入</a></li>
+            <li><a href="/account/public_register/" >注册</a></li>
+
+            {% endif %} 
+        </ul>
+      </div>
+    </nav>
+</div>
+
+<div class="container">
+    {% block main %}{% endblock %}
+
+    <!-- the fixed action btn -->
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons">mode_edit</i>
+      </a>
+      <ul>
+        <li><a href="/campus/public/post/" class="btn-floating red"><i class="material-icons">insert_chart</i></i></a></li>
+        <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+        <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+        <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+      </ul>
+    </div>
+          
+</div>
+
+{% include "common/footer.html" %}
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script >
+    $(".button-collapse").sideNav();
+    // $('.fixed-action-btn').closeFAB();
+/*    var a = $('.fixed-action-btn');
+    a.on('click', function () {
+        if( a.hasClass('active') ){
+            a.closeFAB();
+        }
+        else{
+            a.addClass('active');
+        }
+    });*/
+    
+</script>
+
+{% block script %}
+{% endblock %}
+</body>
+
+</html>

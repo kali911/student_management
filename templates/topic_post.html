@@ -1,0 +1,21 @@
+{% extends 'common/layout.html' %}
+{% block main %}
+    <div class="topic-create container-box">
+        <div class="ui-header">
+            <span class="title">创建新主题</span>
+        </div>
+
+        <div class="ui-content">
+            <form class="mt10" action="/forum/t/create/"  enctype="multipart/form-data" method="post">
+               
+                <div class="input-prepend mt10">
+                    <span class="add-on">#</span>
+					 <input type="file" name="voice" multiple="">
+                </div>
+      
+                <input type="submit" id="checkall" class="btn btn-small" value="立即创建">
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+{% endblock%}

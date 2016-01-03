@@ -1,0 +1,176 @@
+{% extends 'common/layout.html' %}
+{% block stylesheet %}
+<!-- some css for summmernote -->
+<style type="text/css">
+@import url('http://cdn.gbtags.com/twitter-bootstrap/3.2.0/css/bootstrap.css');
+@import url('http://cdn.gbtags.com/font-awesome/4.1.0/css/font-awesome.min.css');
+@import url('http://cdn.gbtags.com/summernote/0.5.2/summernote.css');
+</style>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}
+{% block main %}
+<div class="card-panel hoverable">
+    <form  action="" method="post">
+    {% csrf_token %}
+        <div class="input-field">
+            <i class="material-icons prefix">school</i>
+            <input id="title" type="text" name="title" value="{{ form.cleaned_data.title }}">
+            <label for="title">标题</label>
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="describe" class="materialize-textarea" placeholder="不多于100字">{{ form.cleaned_data.describe }}</textarea>
+            <label for="describe">话题描述</label>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <div>
+                <a id="add-h5" class="btn-floating waves-effect waves-light  cyan" ><i class="material-icons">add</i></a>
+            </div>
+            <div class="woi-help-text">添加详细图文</div>
+        </div>
+        <!-- 定义一个div容器 -->
+        <div id="editor"></div>
+
+
+        <button class="btn waves-effect waves-light " id="submit" type="button" name="action">Submit
+           <i class="material-icons">send</i>
+        </button>
+
+    </form>
+
+    <div id="woi">
+    </div>
+
+  
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="woi-modal-content">
+    <h4>出错啦</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-blue btn blue">知道啦</a>
+  </div>
+</div>
+
+<div id="modal2" class="modal">
+  <div class="woi-modal-content">
+    <h4>操作</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" id="remove-editor" class=" modal-action modal-close waves-effect waves-blue btn blue">确定</a>
+    <a href="#!" id="return-editor" class=" modal-action modal-close waves-effect waves-blue btn blue">返回</a>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="http://cdn.gbtags.com/summernote/0.5.2/summernote.min.js"></script>
+<script>
+
+$(document).ready(function(){
+    var add_buttom = false;
+
+    $("#submit").click(function(){
+        var 
+            content = $('#editor').code(),
+            title = $('#title').val(),
+            describe = $('#describe').val(),
+            pattern = /<img .*?>/g,
+            imgs = content.match(pattern),
+            srcReg = /src=[\'\"](.*?)[\'\"]/
+
+        urls = []
+        if (imgs){   
+            for (i = 0; i < imgs.length; i++){
+                match_src = (imgs[i]).match(srcReg);
+                url = match_src[1];
+                urls.push(url);
+            }
+        }
+            
+        $.post("/campus/public/post/",
+        {
+            title: title,
+            content: content,
+            describe: describe,
+            image_urls: urls,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },function(data){
+            if (data.result===1) {
+                window.location.href='/';
+            }else{ 
+                var cause = data.cause;
+                console.log(cause)
+                $('#modal1 p').html( cause )
+                $('#modal1').openModal();
+            }
+        }
+        );
+
+    });
+
+    $("#add-h5").click(function(){
+        if(!add_buttom) {
+            $('#editor').summernote({  // init the summernote
+                height:400,
+                minHeight:400,
+                onImageUpload: function(files, editor, welEditable) {
+                    sendFile(files[0], editor, welEditable);
+                }
+            });
+            $("#add-h5 i").text('close'); //change the icon
+            add_buttom = true;
+        }else{
+            $('#modal2 p').html('确定要撤销所有编辑的内容吗？！')
+            $('#modal2').openModal();   // get the modal
+        }    
+    })
+
+    // send the file
+    function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("image", file);
+            data.append("csrfmiddlewaretoken", '{{ csrf_token }}')
+            $.ajax({
+                data: data,
+                type: 'POST',
+                url: '/campus/public/post/upload/',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(rev) {
+                    editor.insertImage(welEditable, rev.url);
+
+                }
+            });
+    }
+
+
+    $("#remove-editor").click(function(){  // destroy the editor
+        $('#editor').code(''),
+        $('#editor').destroy();
+        add_buttom = false;
+        $("#add-h5 i").text('add'); //change the icon
+
+    })
+
+
+    $('.modal-trigger').leanModal(); // init modal
+
+  // $("#woi img").css('height', '100%');
+
+});
+
+
+
+</script>
+{% endblock %}

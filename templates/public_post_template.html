@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>{% block title %}我爱大学{% endblock %}</title>
+    <!-- md -->
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+
+<body>
+
+<div id="woi-public">
+    <h1>{{ title }}</h1>
+    {{ content | safe }}
+</div>
+
+<script >
+var images = document.getElementById('woi-public').getElementsByTagName('img');
+for (var i in images){
+    images[i].style.width="100%";
+}
+</script>
+
+</body>

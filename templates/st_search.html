@@ -1,0 +1,90 @@
+{% extends 'common/layout.html' %}
+
+{%block main%}
+
+<div class="card-panel hoverable">
+	<form id="register" action="/search/st/id" method="post">
+
+		<div class="input-field">
+			<i class="material-icons prefix">account_circle</i>
+			<input id="student_id" type="text" name="student_id">
+			<label for="student_id">student_id</label>
+		</div>
+
+		<button type="submit" class="btn waves-effect waves-light woi-btn">submit
+		<i class="material-icons">send</i>
+		</button>
+
+		<p id='result' hidden>{{ result }}</p>
+	</form>
+
+	<form id="register" action="/search/st/name" method="post">
+
+		<div class="input-field">
+			<i class="material-icons prefix">account_circle</i>
+			<input id="student_name" type="text" name="student_name">
+			<label for="student_name">student_name</label>
+		</div>
+
+		<button type="submit" class="btn waves-effect waves-light woi-btn">submit
+		<i class="material-icons">send</i>
+		</button>
+
+		<p id='result' hidden>{{ result }}</p>
+	</form>
+
+	<form id="register" action="/search/st/major" method="post">
+
+		<div class="input-field">
+			<i class="material-icons prefix">account_circle</i>
+			<input id="major" type="text" name="major">
+			<label for="major">major</label>
+		</div>
+
+		<button type="submit" class="btn waves-effect waves-light woi-btn">submit
+		<i class="material-icons">send</i>
+		</button>
+
+		<p id='result' hidden>{{ result }}</p>
+	</form>
+
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="woi-modal-content">
+    <h4>出错啦</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-blue btn blue">知道啦</a>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+$(document).ready(function(){
+
+ 	result = $('#result').html();
+ 	if (result != '1'){
+ 		$('#modal1 p').html( '数据查询有误' )
+ 		$('#modal1').openModal()
+ 	}
+ 	else{
+ 		$('#modal1 h4').html( 'ok' )
+ 		$('#modal1').openModal()
+ 	}
+
+    $('.modal-trigger').leanModal(); // init modal
+
+
+});
+
+
+
+</script>
+{% endblock %}
