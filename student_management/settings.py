@@ -63,7 +63,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'st_manage',
         'USER': 'root',
-        'PASSWORD': 'jindi135',
+        'PASSWORD': '*****',
         'HOST':'127.0.0.1',
         'PORT': '',
         'OPTIONS': {'charset': 'utf8'},
