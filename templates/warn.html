@@ -1,0 +1,94 @@
+{% extends 'common/layout.html' %}
+
+{%block main%}
+
+
+{% if data %}
+<div class="card-panel hoverable">
+  <table>
+    <thead>
+      <tr>
+          <th >学号</th>
+          <th >必修挂分</th>
+  
+      </tr>
+    </thead>
+
+    <tbody>
+
+    {% for item in data %}
+    <tr>
+      <td>{{ item.student_id }}</td>
+      <td>{{ item.credit_sum  }}</td>
+    </tr>
+    
+    {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endif%}
+
+{% if data_x %}
+<div class="card-panel hoverable">
+  <table>
+    <thead>
+      <tr>
+          <th >学号</th>
+          <th > 选修挂分</th>
+  
+      </tr>
+    </thead>
+        <th> </th>
+    <tbody>
+
+    {% for item in data_x %}
+    <tr>
+      <td>{{ item.student_id }}</td>
+      <td>{{ item.credit_sum  }}</td>
+    </tr>
+    
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif%}
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="woi-modal-content">
+    <h4>出错啦</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-blue btn blue">知道啦</a>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+$(document).ready(function(){
+
+ 	result = $('#result').html();
+ 	if (result === '0'){
+ 		$('#modal1 p').html( '数据查询有误' )
+ 		$('#modal1').openModal()
+ 	}
+ 	else if(result === '1'){
+ 		$('#modal1 h4').html( 'ok' )
+ 		$('#modal1').openModal()
+ 	}
+
+    $('.modal-trigger').leanModal(); // init modal
+
+
+});
+
+
+
+</script>
+{% endblock %}

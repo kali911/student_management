@@ -1,0 +1,5 @@
+settings.py
+*.py[cod]
+*.so
+*.egg
+*.egg-info

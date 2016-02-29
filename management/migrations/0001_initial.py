@@ -23,8 +23,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Course',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('course_id', models.CharField(max_length=10, serialize=False, primary_key=True)),
                 ('course_name', models.CharField(max_length=10)),
+                ('property', models.CharField(max_length=10)),
+                ('teach_time', models.CharField(max_length=10)),
+                ('credit', models.FloatField()),
+                ('teacher', models.CharField(max_length=10)),
+                ('classroom_name', models.ForeignKey(to='management.Classroom', db_column=b'classroom_name')),
             ],
             options={
                 'db_table': 'Course',
@@ -36,6 +41,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('score', models.IntegerField()),
+                ('course', models.ForeignKey(to='management.Course')),
             ],
             options={
                 'db_table': 'CourseScore',
@@ -56,7 +62,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Student',
             fields=[
-                ('student_id', models.CharField(max_length=10, serialize=False, primary_key=True)),
+                ('student_id', models.CharField(max_length=15, serialize=False, primary_key=True)),
                 ('student_name', models.CharField(max_length=10)),
                 ('gender', models.CharField(max_length=2)),
                 ('birthday', models.CharField(max_length=10)),
@@ -67,37 +73,15 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
-        migrations.CreateModel(
-            name='TeachPlan',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('property', models.CharField(max_length=10)),
-                ('teach_time', models.CharField(max_length=10)),
-                ('credit', models.FloatField()),
-                ('teacher', models.CharField(max_length=10)),
-                ('classroom_name', models.ForeignKey(to='management.Classroom', db_column=b'classroom_name')),
-                ('course', models.ForeignKey(to='management.Course')),
-            ],
-            options={
-                'db_table': 'TeachPlan',
-            },
-            bases=(models.Model,),
+        migrations.AddField(
+            model_name='coursescore',
+            name='student_id',
+            field=models.ForeignKey(to='management.Student', db_column=b'student_id'),
+            preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
-            name='teachplan',
+            name='course',
             unique_together=set([('teacher', 'classroom_name')]),
-        ),
-        migrations.AddField(
-            model_name='coursescore',
-            name='Course',
-            field=models.ForeignKey(to='management.TeachPlan'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='coursescore',
-            name='student',
-            field=models.ForeignKey(to='management.Student'),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='classroom',

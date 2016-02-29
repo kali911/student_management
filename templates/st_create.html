@@ -64,11 +64,11 @@
 $(document).ready(function(){
 
  	result = $('#result').html();
- 	if (result != '1'){
+ 	if (result === '0'){
  		$('#modal1 p').html( '数据提交有误' )
  		$('#modal1').openModal()
  	}
- 	else{
+ 	else if(result === '1'){
  		$('#modal1 h4').html( 'ok' )
  		$('#modal1 p').html( '成功新建了一个学生' )
  		$('#modal1').openModal()

@@ -12,6 +12,15 @@ urlpatterns = patterns('',
     url(r'^search/st/major', search_st_major),
 
     url(r'^st/create/', st_create),
+
+    url(r'sc/add', sc_add),
+    url(r'sc/search', sc_search),
+    url(r'sc/average', sc_average),
+
+    url(r'my_teachers', my_teachers),
+    
+    url(r'warn', warn),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^index', sc_add_auto),
 )
 

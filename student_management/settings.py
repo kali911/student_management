@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'management',
 )
 
@@ -60,8 +61,8 @@ WSGI_APPLICATION = 'student_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'student_management',
-        'USER': 'kidy',
+        'NAME': 'st_manage',
+        'USER': 'root',
         'PASSWORD': 'jindi135',
         'HOST':'127.0.0.1',
         'PORT': '',

@@ -1,19 +1,14 @@
 from django.db import models
 
-# Create your models here.
-class Course(models.Model):
-    'id primary_key'
-    course_name = models.CharField(max_length=10)
-    
-    class Meta:
-        db_table = 'Course'
-
 class Major(models.Model):
     'id primary_key'
     major_name = models.CharField(max_length=10)
 
     class Meta:
         db_table = 'Major'
+
+    def __unicode__(self):
+        return self.major_name
 
 class Classroom(models.Model):
     # 'id primary_key'
@@ -22,6 +17,9 @@ class Classroom(models.Model):
 
     class Meta:
         db_table = 'Classroom'
+
+    def __unicode__(self):
+        return self.classroom_name
 
 class Student(models.Model):
     student_id = models.CharField(max_length=15, primary_key=True)
@@ -33,8 +31,12 @@ class Student(models.Model):
     class Meta:
         db_table = 'Student'
 
-class TeachPlan(models.Model):
-    course = models.ForeignKey(Course)
+    def __unicode__(self):
+        return self.student_name
+
+class Course(models.Model):
+    course_id = models.CharField(max_length=10, primary_key=True)
+    course_name = models.CharField(max_length=10)
     classroom_name = models.ForeignKey(Classroom, db_column='classroom_name')
     property = models.CharField(max_length=10)
     teach_time = models.CharField(max_length=10)
@@ -42,15 +44,22 @@ class TeachPlan(models.Model):
     teacher = models.CharField(max_length=10)
 
     class Meta:
-        db_table = 'TeachPlan'
+        db_table = 'Course'
         unique_together = ("teacher", "classroom_name")
+    
+    def __unicode__(self):
+        return self.course_id
+
 
 class CourseScore(models.Model):
     student_id = models.ForeignKey(Student, db_column='student_id')
-    course = models.ForeignKey(TeachPlan)
+    course_id = models.ForeignKey(Course, db_column='course_id')
     score = models.IntegerField()
-    
+    make_up = models.IntegerField(default=0)
+
     class Meta:
         db_table = 'CourseScore'
+        unique_together = ("student_id", "course_id")
 
-        
+    def __unicode__(self):
+        return self.student_id + 'by ' + self.course_id

@@ -1,0 +1,25 @@
+
+{% extends 'common/layout.html' %}
+
+{%block main%}
+
+<div class="card-panel hoverable">
+  <table>
+    <thead>
+      <tr>
+          <th >必修加权平均分</th>
+          <th >所有加权平均分</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>{{ averge }}</td>
+        <td>{{ averge_b }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}

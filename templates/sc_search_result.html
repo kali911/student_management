@@ -1,0 +1,36 @@
+
+{% extends 'common/layout.html' %}
+
+{%block main%}
+
+<div class="card-panel hoverable">
+  <table>
+    <thead>
+      <tr>
+          <th >课程号 </th>
+          <th >课程名 </th>
+          <th >性质 </th>
+          <th >学期 </th>
+          <th >学分 </th>
+          <th >成绩 </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for item in data %}
+      <tr>
+        <td>{{ item.course_id }}</td>
+        <td>{{ item.course_name }}</td>
+        <td>{{ item.property }}</td>
+        <td>{{ item.teach_time }}</td>
+        <td>{{ item.credit }}</td>
+        <td>{{ item.score }}</td>
+      </tr>
+ 
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}
